@@ -85,11 +85,13 @@ services:
     image: drone/agent:latest
     depends_on:
       - drone-server
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - DRONE_RPC_SERVER=http://drone-server
       - DRONE_RPC_SECRET=ALQU2M0KdptXUdTPKcEw
       - DRONE_DEBUG=true
-      - DOCKER_HOST=tcp://docker-bind:2375
+      # - DOCKER_HOST=tcp://docker-bind:2375
       - DRONE_SERVER=drone-server:9000
       - DRONE_SECRET=ALQU2M0KdptXUdTPKcEw
       - DRONE_MAX_PROCS=5
@@ -97,7 +99,7 @@ services:
   docker-bind:
      image: docker:dind
      privileged: true
-    #  command: --storage-driver=overlay
+     command: --storage-driver=overlay
 
 networks:
   default:

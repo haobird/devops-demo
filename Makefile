@@ -1,6 +1,6 @@
 # 启动服务
 start_init: # 创建基础网络服务
-	docker network create  dczone_default
+	docker network create -d bridge dczone_default
 	mkdir -p /data
 	
 start_zone: # 开启基础服务

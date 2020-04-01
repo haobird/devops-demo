@@ -2,7 +2,7 @@ workspace:
   base: /srv/drone-demo
   path: .
   
----
+
 kind: pipeline
 type: exec
 name: default

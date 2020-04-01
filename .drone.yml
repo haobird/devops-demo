@@ -1,5 +1,4 @@
 kind: pipeline
-type: docker
 name: demo
 
 steps:
@@ -8,7 +7,7 @@ steps:
     commands:
     - echo hello
     - echo world
-    
+
 # steps:
 #   - name: build
 #     image: golang:1.11.4

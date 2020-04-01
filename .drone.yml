@@ -1,14 +1,16 @@
+workspace:
+  base: /srv/drone-demo
+  path: .
+
 kind: pipeline
 name: demo
 
 steps:
   - name: greeting
-    image: alpine
     commands:
-    - echo hello
-    - echo world
+      - echo hello world
 
-  - name: build
+  - name: build # 尝试编译go应用
     image: golang:1.11.4
     commands:
       - pwd
@@ -16,38 +18,39 @@ steps:
       - go build .
       - go test demo/util
 
-  - name: publish
-    image: plugins/docker:latest
-    settings:
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
-      repo: haobird/demo
-      tags: latest
+  # - name: publish  # 镜像构建
+  #   image: plugins/docker:latest
+  #   settings:
+  #     username:
+  #       from_secret: docker_username
+  #     password:
+  #       from_secret: docker_password
+  #     repo: haobird/demo
+  #     tags: latest
   
   # - name: update
 
 
-  
+  # - name: run
 
-#   - name: deploy
-#     image: appleboy/drone-ssh
-#     pull: true
-#     settings:
-#       host: kanda.me
-#       user: cpp
-#       key:
-#         from_secret: deploy_key
-#       script:
-#         - cd /data/
-#         - mkdir app/
-#         - cd /data/app
-#         - docker rmi -f example/demo
-#         - echo "login docker"
-# #        - docker login --username ${DOCKER_USER} --password ${DOCKER_SEC}
-#         - echo "login success, pulling..."
-#         - docker pull example/demo:latest
-#         - echo "image running"
-#         - docker run -p 8088:8088 -d example/demo
-#         - echo "run success"
+  
+  - name: deploy
+    image: appleboy/drone-ssh
+    pull: true
+    settings:
+      host: kanda.me
+      user: cpp
+      key:
+        from_secret: deploy_key
+      script:
+        - cd /data/
+        - mkdir app22/
+        - cd /data/app22
+        - docker rmi -f example/demo
+        - echo "login docker"
+#        - docker login --username ${DOCKER_USER} --password ${DOCKER_SEC}
+        - echo "login success, pulling..."
+        - docker pull haobird/demo:latest
+        - echo "image running"
+        - docker run -p 8088:8088 -d haobird/demo
+        - echo "run success"

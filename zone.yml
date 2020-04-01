@@ -20,30 +20,48 @@ services:
       - "6379:6379"
 
   # 数据库服务
-  mysql:
-    image: mysql:5.7.16
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
     volumes:
-      - /data/mysql5.7:/var/lib/mysql
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - 3306:3306
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+      - /data/postgres:/var/lib/postgresql/data
     environment:
-      MYSQL_ROOT_PASSWORD: pass
-      MYSQL_DATABASE: gogs
-      MYSQL_USER: gogs
-      MYSQL_PASSWORD: pass
-      TZ: Asia/Shanghai
+      POSTGRES_USER: root
+      POSTGRES_DB: gogs
+      POSTGRES_PASSWORD: 123456
+    
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8085:8080
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    ports:
-      - "8081:80"
-    environment:
-      PMA_HOST: "mysql"
-      PMA_USER: "root"
-      PMA_PASSWORD: "pass"
+  # mysql:
+  #   image: mysql:5.7.16
+  #   volumes:
+  #     - /data/mysql5.7:/var/lib/mysql
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   ports:
+  #     - 3306:3306
+  #   command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: pass
+  #     MYSQL_DATABASE: gogs
+  #     MYSQL_USER: gogs
+  #     MYSQL_PASSWORD: pass
+  #     TZ: Asia/Shanghai
+
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   container_name: phpmyadmin
+  #   ports:
+  #     - "8081:80"
+  #   environment:
+  #     PMA_HOST: "mysql"
+  #     PMA_USER: "root"
+  #     PMA_PASSWORD: "pass"
 
   gogs:
     image: gogs/gogs:latest
@@ -54,7 +72,7 @@ services:
       - /data/gogs:/data
       # - ./zone/gogs/app.ini:/data/gogs/conf/app.ini
     depends_on:
-      - mysql
+      - postgres
 
   drone-server:
     image: drone/drone:latest

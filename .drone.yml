@@ -8,14 +8,13 @@ steps:
     - echo hello
     - echo world
 
-# steps:
-#   - name: build
-#     image: golang:1.11.4
-#     commands:
-#       - pwd
-#       - go version
-#       - go build .
-#       - go test demo/util
+  - name: build
+    image: golang:1.11.4
+    commands:
+      - pwd
+      - go version
+      - go build .
+      - go test demo/util
 
   #  - name: frontend
   #    image: node:6

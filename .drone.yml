@@ -16,21 +16,20 @@ steps:
       - go build .
       - go test demo/util
 
-  #  - name: frontend
-  #    image: node:6
-  #    commands:
-  #      - npm install
-  #      - npm test
+  - name: publish
+    image: plugins/docker:latest
+    settings:
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      repo: example/demo
+      tags: latest
+  
+  # - name: update
 
-  # - name: publish
-  #   image: plugins/docker:latest
-  #   settings:
-  #     username:
-  #       from_secret: docker_username
-  #     password:
-  #       from_secret: docker_password
-  #     repo: example/demo
-  #     tags: latest
+
+  
 
 #   - name: deploy
 #     image: appleboy/drone-ssh

@@ -1,0 +1,105 @@
+version: '3'
+services:
+  traefik:  # 负载均衡服务
+    image: traefik:latest
+    container_name: traefik
+    restart: always
+    ports: 
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - ./zone/traefik.yml:/etc/traefik/traefik.yml
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  redis:  # 缓存服务
+    image: redis:3.2.1
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  # 数据库服务
+  mysql:
+    image: mysql:5.7.16
+    volumes:
+      - /data/mysql5.7:/var/lib/mysql
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 3306:3306
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: gogs
+      MYSQL_USER: gogs
+      MYSQL_PASSWORD: pass
+      TZ: Asia/Shanghai
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: "mysql"
+      PMA_USER: "root"
+      PMA_PASSWORD: "pass"
+
+  gogs:
+    image: gogs/gogs:latest
+    ports:
+      - "10022:22"
+      - "3000:3000"
+    volumes:
+      - /data/gogs:/data
+      # - ./zone/gogs/app.ini:/data/gogs/conf/app.ini
+    depends_on:
+      - mysql
+
+  drone-server:
+    image: drone/drone:latest
+    ports:
+      - "8082:80"
+      - 8843:443
+      - 9000
+    volumes:
+      - /data/drone:/var/lib/drone/
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DRONE_OPEN=true
+      - DRONE_SERVER_HOST=drone-server
+      - DRONE_DEBUG=true
+      - DRONE_GIT_ALWAYS_AUTH=false
+      - DRONE_GOGS=true
+      - DRONE_GOGS_SKIP_VERIFY=false
+      - DRONE_GOGS_SERVER=http://localhost:3000
+      - DRONE_PROVIDER=gogs
+      - DRONE_DATABASE_DATASOURCE=/var/lib/drone/drone.sqlite
+      - DRONE_DATABASE_DRIVER=sqlite3
+      - DRONE_SERVER_PROTO=http
+      - DRONE_RPC_SECRET=ALQU2M0KdptXUdTPKcEw
+      - DRONE_SECRET=ALQU2M0KdptXUdTPKcEw
+
+
+  drone-agent:
+    image: drone/agent:latest
+    depends_on:
+      - drone-server
+    environment:
+      - DRONE_RPC_SERVER=http://drone-server
+      - DRONE_RPC_SECRET=ALQU2M0KdptXUdTPKcEw
+      - DRONE_DEBUG=true
+      - DOCKER_HOST=tcp://docker-bind:2375
+      - DRONE_SERVER=drone-server:9000
+      - DRONE_SECRET=ALQU2M0KdptXUdTPKcEw
+      - DRONE_MAX_PROCS=5
+      
+  docker-bind:
+     image: docker:dind
+     privileged: true
+    #  command: --storage-driver=overlay
+
+networks:
+  default:
+    external:
+      name: dczone_default

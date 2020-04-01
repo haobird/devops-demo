@@ -70,7 +70,6 @@ services:
       - "3000:3000"
     volumes:
       - /data/gogs:/data
-      # - ./zone/gogs/app.ini:/data/gogs/conf/app.ini
     depends_on:
       - postgres
 
@@ -100,7 +99,8 @@ services:
 
 
   drone-agent:
-    image: drone/drone-runner-docker:latest
+    # image: drone/drone-runner-docker:latest
+    image: drone/agent:latest
     depends_on:
       - drone-server
     volumes:
@@ -117,7 +117,7 @@ services:
   docker-bind:
      image: docker:dind
      privileged: true
-     command: --storage-driver=overlay
+    #  command: --storage-driver=overlay
 
 networks:
   default:

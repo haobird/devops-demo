@@ -1,56 +1,73 @@
 workspace:
   base: /srv/drone-demo
   path: .
-
+  
+---
 kind: pipeline
-name: demo
+type: exec
+name: default
+
+platform:
+  os: linux
+  arch: amd64
 
 steps:
   - name: greeting
     commands:
       - echo hello world
 
-  - name: build # 尝试编译go应用
-    image: golang:1.11.4
-    commands:
-      - pwd
-      - go version
-      - go build .
-      - go test demo/util
+---
+# kind: pipeline
+# name: demo
 
-  # - name: publish  # 镜像构建
-  #   image: plugins/docker:latest
-  #   settings:
-  #     username:
-  #       from_secret: docker_username
-  #     password:
-  #       from_secret: docker_password
-  #     repo: haobird/demo
-  #     tags: latest
+# steps:
+#   - name: greeting
+#     image: alpine
+#     commands:
+#     - echo hello
+#     - echo world
+
+#   - name: build # 尝试编译go应用
+#     image: golang:1.11.4
+#     commands:
+#       - pwd
+#       - go version
+#       - go build .
+#       - go test demo/util
+
+#   - name: publish  # 镜像构建
+#     image: plugins/docker:latest
+#     settings:
+#       username:
+#         from_secret: docker_username
+#       password:
+#         from_secret: docker_password
+#       repo: haobird/demo
+#       tags: latest
   
-  # - name: update
+#   # - name: update
 
 
-  # - name: run
+#   # - name: run
 
   
-  - name: deploy
-    image: appleboy/drone-ssh
-    pull: true
-    settings:
-      host: kanda.me
-      user: cpp
-      key:
-        from_secret: deploy_key
-      script:
-        - cd /data/
-        - mkdir app22/
-        - cd /data/app22
-        - docker rmi -f example/demo
-        - echo "login docker"
-#        - docker login --username ${DOCKER_USER} --password ${DOCKER_SEC}
-        - echo "login success, pulling..."
-        - docker pull haobird/demo:latest
-        - echo "image running"
-        - docker run -p 8088:8088 -d haobird/demo
-        - echo "run success"
+#   - name: deploy
+#     image: appleboy/drone-ssh
+#     pull: true
+#     settings:
+#       host: kanda.me
+#       user: cpp
+#       key:
+#         from_secret: deploy_key
+#       script:
+#         - cd /data/
+#         - mkdir app22/
+#         - cd /data/app22
+#         - docker rmi -f example/demo
+#         - echo "login docker"
+# #        - docker login --username ${DOCKER_USER} --password ${DOCKER_SEC}
+#         - echo "login success, pulling..."
+#         - docker pull haobird/demo:latest
+#         - echo "image running"
+#         - docker run -p 8088:8088 -d haobird/demo
+#         - echo "run success"

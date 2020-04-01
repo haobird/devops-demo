@@ -72,7 +72,7 @@ services:
       - DRONE_GIT_ALWAYS_AUTH=false
       - DRONE_GOGS=true
       - DRONE_GOGS_SKIP_VERIFY=false
-      - DRONE_GOGS_SERVER=http://localhost:3000
+      - DRONE_GOGS_SERVER=http://gogs:3000
       - DRONE_PROVIDER=gogs
       - DRONE_DATABASE_DATASOURCE=/var/lib/drone/drone.sqlite
       - DRONE_DATABASE_DRIVER=sqlite3

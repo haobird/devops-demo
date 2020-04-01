@@ -29,7 +29,7 @@ steps:
         from_secret: docker_password
       repo: haobird/demo
       tags: latest
-      dockerfile: .
+      # dockerfile: .
   
   - name: deploy
     image: appleboy/drone-ssh

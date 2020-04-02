@@ -9,13 +9,13 @@ steps:
   - name: greeting
     image: hello-world
 
-  - name: build # 尝试编译go应用
-    image: golang:1.11.4
-    commands:
-      - pwd
-      - go version
-      - go build .
-      - go test demo/util
+  # - name: build # 尝试编译go应用
+  #   image: golang:1.11.4
+  #   commands:
+  #     - pwd
+  #     - go version
+  #     - go build .
+  #     - go test demo/util
 
   - name: push-docker-staging  # 测试镜像构建
     image: plugins/docker:latest

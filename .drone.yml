@@ -19,6 +19,7 @@ steps:
 
   - name: push-docker-staging  # 测试镜像构建
     image: plugins/docker:latest
+    privileged: true
     settings:
       # cache_from: golang:1.11.4,haobird/demo
       repo: haobird/demo
@@ -27,13 +28,12 @@ steps:
       password:
         from_secret: docker_password
       tag:  
-        - staging  
+        - staging
         - sha_${DRONE_COMMIT_SHA} 
     when:  
       branch: master  
       event: push
-    privileged: true
-  
+    
 #   - name: deploy
 #     image: appleboy/drone-ssh
 #     pull: true

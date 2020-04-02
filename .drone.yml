@@ -17,16 +17,21 @@ steps:
       - go build .
       - go test demo/util
 
-  - name: publish  # 镜像构建
+  - name: push-docker-staging  # 测试镜像构建
     image: plugins/docker:latest
     settings:
       cache_from: haobird/demo
+      repo: haobird/demo
       username:
         from_secret: docker_username
       password:
         from_secret: docker_password
-      repo: haobird/demo
-      tags: latest
+      tag:  
+        - staging  
+        - sha_${DRONE_COMMIT_SHA} 
+    when:  
+      branch: master  
+      event: push
   
 #   - name: deploy
 #     image: appleboy/drone-ssh

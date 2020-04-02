@@ -24,6 +24,7 @@ steps:
       path: /var/lib/docker
     settings:
       # cache_from: golang:1.11.4,haobird/demo
+      mirror: https://registry.docker-cn.com
       repo: haobird/demo
       username:
         from_secret: docker_username

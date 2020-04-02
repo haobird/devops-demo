@@ -20,7 +20,7 @@ steps:
   - name: push-docker-staging  # 测试镜像构建
     image: plugins/docker:latest
     settings:
-      cache_from: haobird/demo
+      cache_from: golang:1.11.4,haobird/demo
       repo: haobird/demo
       username:
         from_secret: docker_username

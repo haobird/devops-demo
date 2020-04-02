@@ -59,8 +59,8 @@ steps:
 
 
 volumes:  
-  - name: sock  
-    host:  
-      path: /var/run/docker.sock
+  # - name: sock  
+  #   host:  
+  #     path: /var/run/docker.sock
   - name: cache
     temp: {}

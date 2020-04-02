@@ -99,8 +99,8 @@ services:
 
 
   drone-agent:
-    # image: drone/drone-runner-docker:latest
-    image: drone/agent:latest
+    image: drone/drone-runner-docker
+    # image: drone/agent
     depends_on:
       - drone-server
     volumes:

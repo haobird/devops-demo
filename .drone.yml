@@ -6,11 +6,11 @@ kind: pipeline
 name: demo
 
 steps:
-  # - name: greeting
-  #   image: alpine
-  #   commands:
-  #   - echo hello
-  #   - echo world
+  - name: greeting
+    image: alpine
+    commands:
+    - echo hello
+    - echo world
 
   # - name: build # 尝试编译go应用
   #   image: golang:1.11.4
@@ -31,23 +31,23 @@ steps:
   #     tags: latest
       # dockerfile: .
   
-  - name: deploy
-    image: appleboy/drone-ssh
-    pull: true
-    settings:
-      host: 116.62.128.252
-      user: root
-      key:
-        from_secret: deploy_key
-      script:
-        - cd /data/
-        - mkdir app22/
-        - cd /data/app22
-        - docker rmi -f haobird/demo
-        - echo "login docker"
-#        - docker login --username ${DOCKER_USER} --password ${DOCKER_SEC}
-        - echo "login success, pulling..."
-        - docker pull haobird/demo:latest
-        - echo "image running"
-        - docker run -p 8088:8088 -d haobird/demo
-        - echo "run success"
+#   - name: deploy
+#     image: appleboy/drone-ssh
+#     pull: true
+#     settings:
+#       host: 116.62.128.252
+#       user: root
+#       key:
+#         from_secret: deploy_key
+#       script:
+#         - cd /data/
+#         - mkdir app22/
+#         - cd /data/app22
+#         - docker rmi -f haobird/demo
+#         - echo "login docker"
+# #        - docker login --username ${DOCKER_USER} --password ${DOCKER_SEC}
+#         - echo "login success, pulling..."
+#         - docker pull haobird/demo:latest
+#         - echo "image running"
+#         - docker run -p 8088:8088 -d haobird/demo
+#         - echo "run success"

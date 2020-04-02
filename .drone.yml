@@ -64,6 +64,6 @@ steps:
 volumes:
 - name: cache
   host:
-    path: /var/lib/cache
+    path: /data/var-lib-docker
   # - name: cache
   #   temp: {}

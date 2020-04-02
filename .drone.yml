@@ -21,7 +21,7 @@ steps:
     image: plugins/docker:latest
     volumes:
       - name: cache
-        path: /tmp/cache
+        path: /var/lib/docker
     settings:
       # cache_from: golang:1.11.4,haobird/demo
       repo: haobird/demo

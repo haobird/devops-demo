@@ -7,4 +7,3 @@ services:
     volumes:
 #      - ./data:/var/lib/drone/
       - /var/run/docker.sock:/var/run/docker.sock
-    environment:

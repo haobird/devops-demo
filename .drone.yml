@@ -20,7 +20,8 @@ steps:
   - name: push-docker-staging  # 测试镜像构建
     image: plugins/docker:latest
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:rw
+      - name: cache
+        path: /tmp/cache
     settings:
       # cache_from: golang:1.11.4,haobird/demo
       repo: haobird/demo
@@ -28,7 +29,7 @@ steps:
         from_secret: docker_username
       password:
         from_secret: docker_password
-      tag:  
+      tag:
         - staging
         - sha_${DRONE_COMMIT_SHA} 
     when:  
@@ -57,7 +58,9 @@ steps:
 #         - echo "run success"
 
 
-# volumes:  
-#   - name: cache  
-#     host:  
-#       path: /tmp/cache
+volumes:  
+  - name: sock  
+    host:  
+      path: /var/run/docker.sock
+  - name: cache
+    temp: {}

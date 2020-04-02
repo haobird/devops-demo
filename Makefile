@@ -4,7 +4,7 @@ start_init: # 创建基础网络服务
 	mkdir -p /data
 	
 start_zone: # 开启基础服务
-	docker-compose -f zone.yml up --force-recreate --build -d 
+	docker-compose -f zone.yml up --force-recreate --remove-orphans --build -d 
 
 start_test:
 	docker run --privileged --rm  -v Dockerfile:/Dockerfile plugins/docker --dry-run

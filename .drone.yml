@@ -24,9 +24,6 @@ steps:
     - name: overlay
       path: /var/lib/docker
     settings:
-      # cache_from: golang:1.11.4,haobird/demo
-      storage_driver: overlay
-      # mirror: https://dockerhub.azk8s.cn
       repo: haobird/demo
       username:
         from_secret: docker_username

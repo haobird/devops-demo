@@ -6,37 +6,37 @@ kind: pipeline
 name: demo
 
 steps:
-  - name: greeting
-    image: alpine
-    commands:
-    - echo hello
-    - echo world
+  # - name: greeting
+  #   image: alpine
+  #   commands:
+  #   - echo hello
+  #   - echo world
 
-  - name: build # 尝试编译go应用
-    image: golang:1.11.4
-    commands:
-      - pwd
-      - go version
-      - go build .
-      - go test demo/util
+  # - name: build # 尝试编译go应用
+  #   image: golang:1.11.4
+  #   commands:
+  #     - pwd
+  #     - go version
+  #     - go build .
+  #     - go test demo/util
 
-  - name: publish  # 镜像构建
-    image: plugins/docker:latest
-    settings:
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
-      repo: haobird/demo
-      tags: latest
+  # - name: publish  # 镜像构建
+  #   image: plugins/docker:latest
+  #   settings:
+  #     username:
+  #       from_secret: docker_username
+  #     password:
+  #       from_secret: docker_password
+  #     repo: haobird/demo
+  #     tags: latest
       # dockerfile: .
   
   - name: deploy
     image: appleboy/drone-ssh
     pull: true
     settings:
-      host: kanda.me
-      user: cpp
+      host: 116.62.128.252
+      user: root
       key:
         from_secret: deploy_key
       script:

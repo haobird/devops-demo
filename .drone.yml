@@ -20,8 +20,8 @@ steps:
   - name: push-docker-staging  # 测试镜像构建
     image: plugins/docker:latest
     volumes:
-      - name: cache
-        path: /var/lib/docker
+    - name: cache
+      path: /tmp/cache
     settings:
       # cache_from: golang:1.11.4,haobird/demo
       repo: haobird/demo
@@ -57,9 +57,13 @@ steps:
 #         - docker run -p 8088:8088 -d haobird/demo
 #         - echo "run success"
 
-volumes:  
-  - name: cache  
-    host:  
-      path: /data/var-lib-docker
+# volumes:  
+  # - name: cache  
+  #   host:  
+  #     path: /data/var-lib-docker
+volumes:
+- name: cache
+  host:
+    path: /var/lib/cache
   # - name: cache
   #   temp: {}

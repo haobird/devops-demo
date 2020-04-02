@@ -1,8 +1,4 @@
-FROM golang:1.11.4
-WORKDIR ${GOPATH}/src/demo
-COPY . ${GOPATH}/src/demo
+FROM alpine
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o demo .
-
-EXPOSE 8088
-CMD ["./demo"]
+RUN echo "hello world"
+CMD ["/bin/sh","-c", " while true;do echo hello docker;sleep 1;done"]

@@ -5,7 +5,7 @@ workspace:
 kind: pipeline
 name: demo
 
-steps:
+steps: 
   - name: greeting
     image: alpine
     commands:
@@ -23,6 +23,7 @@ steps:
   - name: publish  # 镜像构建
     image: plugins/docker:latest
     settings:
+      cache_from: haobird/demo
       username:
         from_secret: docker_username
       password:
@@ -51,3 +52,9 @@ steps:
         - echo "image running"
         - docker run -p 8088:8088 -d haobird/demo
         - echo "run success"
+
+
+volumes:  
+  - name: cache  
+    host:  
+      path: /tmp/cache

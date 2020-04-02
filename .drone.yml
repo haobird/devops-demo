@@ -54,7 +54,7 @@ steps:
         - echo "run success"
 
 
-volumes:  
-  - name: cache  
-    host:  
-      path: /tmp/cache
+# volumes:  
+#   - name: cache  
+#     host:  
+#       path: /tmp/cache

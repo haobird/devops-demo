@@ -7,7 +7,7 @@ name: demo
 
 steps: 
   - name: greeting
-    image: hello-world:latest
+    image: hello-world
 
   - name: build # 尝试编译go应用
     image: golang:1.11.4
@@ -17,17 +17,16 @@ steps:
       - go build .
       - go test demo/util
 
-  # - name: publish  # 镜像构建
-  #   image: plugins/docker:latest
-  #   settings:
-  #     cache_from: haobird/demo
-  #     username:
-  #       from_secret: docker_username
-  #     password:
-  #       from_secret: docker_password
-  #     repo: haobird/demo
-  #     tags: latest
-      # dockerfile: .
+  - name: publish  # 镜像构建
+    image: plugins/docker:latest
+    settings:
+      cache_from: haobird/demo
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      repo: haobird/demo
+      tags: latest
   
 #   - name: deploy
 #     image: appleboy/drone-ssh

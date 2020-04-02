@@ -58,8 +58,8 @@ steps:
 #         - echo "run success"
 
 volumes:  
-  # - name: sock  
-  #   host:  
-  #     path: /var/run/docker.sock
-  - name: cache
-    temp: {}
+  - name: cache  
+    host:  
+      path: /data/var-lib-docker
+  # - name: cache
+  #   temp: {}

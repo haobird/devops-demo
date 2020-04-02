@@ -19,7 +19,6 @@ steps:
 
   - name: push-docker-staging  # 测试镜像构建
     image: plugins/docker:latest
-    privileged: true
     volumes:
     - name: cache
       path: /tmp/cache
@@ -63,8 +62,8 @@ steps:
   #   host:  
   #     path: /data/var-lib-docker
 volumes:
-- name: cache
-  host:
-    path: /data/var-lib-docker
-  # - name: cache
-  #   temp: {}
+# - name: cache
+#   host:
+#     path: /data/var-lib-docker
+  - name: cache
+    temp: {}

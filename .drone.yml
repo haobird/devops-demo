@@ -19,6 +19,8 @@ steps:
 
   - name: push-docker-staging  # 测试镜像构建
     image: plugins/docker:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:rw
     settings:
       # cache_from: golang:1.11.4,haobird/demo
       repo: haobird/demo

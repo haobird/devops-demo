@@ -7,10 +7,7 @@ name: demo
 
 steps: 
   - name: greeting
-    image: hello-world
-    # commands:
-    # - echo hello
-    # - echo world
+    image: hello-world:latest
 
   - name: build # 尝试编译go应用
     image: golang:1.11.4

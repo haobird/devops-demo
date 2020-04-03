@@ -12,8 +12,6 @@ services:
     volumes:
       - ./zone/traefik.toml:/etc/traefik/traefik.toml
       - /var/run/docker.sock:/var/run/docker.sock
-    labels:
-      - "traefik.http.routers.traefik.rule=Host(`live.byetime.com`)"
 
   whoami:
     image: containous/whoami
@@ -44,8 +42,8 @@ services:
     restart: always
     ports:
       - 8085:8080
-    labels:
-      - "traefik.http.routers.adminer.rule=Host(`adminer.docker.local`)"
+    # labels:
+    #   - "traefik.http.routers.adminer.rule=Host(`adminer.docker.local`)"
 
   gogs:
     image: gogs/gogs:latest

@@ -58,8 +58,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - DRONE_USER_CREATE=username:demo,admin:true
-      - DRONE_GITLAB_PRIVATE_MODE=true
-      - DRONE_OPEN=false
+      # - DRONE_GITLAB_PRIVATE_MODE=true
+      - DRONE_OPEN=true
       - DRONE_SERVER_HOST=drone-server
       - DRONE_DEBUG=true
       - DRONE_GIT_ALWAYS_AUTH=false

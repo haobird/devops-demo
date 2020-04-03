@@ -1,0 +1,22 @@
+[providers.docker]
+  endpoint = "unix:///var/run/docker.sock"
+  defaultRule = "Host(`{{ normalize .Name }}.live.byetime.com`)"
+  watch = true
+
+[api]
+  insecure = true
+  dashboard = true
+
+[accessLog]
+  filePath = "./traefik-access.json"
+  format = "json"
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+
+  [entryPoints.web-secure]
+    address = ":443"
+
+  [entryPoints.ssh]
+    address = ":22"

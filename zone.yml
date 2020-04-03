@@ -1,16 +1,22 @@
 version: '3'
 services:
-  # traefik:  # 负载均衡服务
-  #   image: traefik:latest
-  #   container_name: traefik
-  #   restart: always
-  #   ports: 
-  #     - "80:80"
-  #     - "443:443"
-  #     - "8080:8080"
-  #   volumes:
-  #     - ./zone/traefik.yml:/etc/traefik/traefik.yml
-  #     - /var/run/docker.sock:/var/run/docker.sock
+  traefik:  # 负载均衡服务
+    image: traefik:latest
+    container_name: traefik
+    restart: always
+    ports: 
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+      # - "22:22"
+    volumes:
+      - ./zone/traefik.toml:/etc/traefik/traefik.toml
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  whoami:
+    image: containous/whoami
+    # labels:
+    #   - "traefik.http.routers.whoami.rule=Host(`whoami.docker.local`)"
 
   # redis:  
   #   image: redis:3.2.1
@@ -36,12 +42,14 @@ services:
     restart: always
     ports:
       - 8085:8080
+    labels:
+      - "traefik.http.routers.adminer.rule=Host(`adminer.docker.local`)"
 
   gogs:
     image: gogs/gogs:latest
     ports:
-      - "10022:22"
       - "3000:3000"
+      - "10022:22"
     volumes:
       - /data/gogs:/data
     depends_on:
